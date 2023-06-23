@@ -50,7 +50,7 @@ Find the code and report in the `project_02/` folder.
 
 **My favorite visualization is:** 
 
-![Statewise Rape Cases](C:\\Users\\bruva\\dataviz_final_project\\figures\\statewise-rape-cases.png)
+![Statewise Rape Cases](https://github.com/brunda09/dataviz_final_project/blob/main/figures/statewise-rape-cases.png)
 
 
 ## Project 03
@@ -70,7 +70,7 @@ In this exercise I explored methods to create different types of data visualizat
 
 **My favorite visualization is:** 
 
-![Max Temperatures Ridges](C:\Users\bruva\dataviz_final_project\figures\max_temp_ridges_plasma.png)
+![Max Temperatures Ridges](https://github.com/brunda09/dataviz_final_project/blob/main/figures/max_temp_ridges_plasma.png)
 
 
 ### Moving Forward
