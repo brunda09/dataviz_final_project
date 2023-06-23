@@ -28,7 +28,7 @@ Find the code and report in the `project_01/` folder.
 
 **My favorite visualization is :**
 
-![Data Science Job Sectors](C:\\Users\\bruva\\dataviz_final_project\\figures\\DS-Job-Sectors.png)
+![Data Science Job Sectors](https://github.com/brunda09/dataviz_final_project/blob/main/figures/DS-Job-Sectors.png)
 
 
 ## Project 02
