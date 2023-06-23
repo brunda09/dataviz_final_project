@@ -46,7 +46,7 @@ The initial step is to convert the numeric columns of "month" into written chara
 
 To obtain the actual graph according to the image given, the function of **facet_wrap** is performed on the column month and the months are divided into different grids and the data is displayed in the form of a histogram. 
 
-![Maximum Temp vs. Days](C:\Users\bruva\dataviz_final_project\figures\max-temp-facet.png)
+![Maximum Temp vs. Days](https://github.com/brunda09/dataviz_final_project/blob/main/figures/max-temp-facet.png)
 
 
 ***
@@ -55,7 +55,7 @@ To obtain the actual graph according to the image given, the function of **facet
 
 The second plot is the density plot which is evaluated using the kernel **epanechnikov** and the parameters of bw and lwd which set the bandwidth and line width respectively are also used to plot the graph.
 
-![Density Plot](C:\Users\bruva\dataviz_final_project\figures\max-temp-density.png)
+![Density Plot](https://github.com/brunda09/dataviz_final_project/blob/main/figures/max-temp-density.png)
 
 ***
 
@@ -63,7 +63,7 @@ The second plot is the density plot which is evaluated using the kernel **epanec
 
 The third plot is the density plot along with facet_wrap which is evaluated using the default kernel **gaussian** is used to plot the graph.The legend is omitted from being displayed by using the function *legend.position = "none"*
 
-![Default Density Plot](C:\Users\bruva\dataviz_final_project\figures\density-facet.png)
+![Default Density Plot](https://github.com/brunda09/dataviz_final_project/blob/main/figures/density-facet.png)
 
 ***
 
@@ -71,7 +71,7 @@ The third plot is the density plot along with facet_wrap which is evaluated usin
 
 Density ridges is plotted with quantile lines and the plot showcases the second quantile. The plot below uses the `plasma` option (color scale) for the _viridis_ palette
 
-![Density Plot Plasma](C:\Users\bruva\dataviz_final_project\figures\max_temp_ridges_plasma.png)
+![Density Plot Plasma](https://github.com/brunda09/dataviz_final_project/blob/main/figures/max_temp_ridges_plasma.png)
 
 ***
 
@@ -79,7 +79,7 @@ Density ridges is plotted with quantile lines and the plot showcases the second 
 
 The bar plot shows average precipitation for each month. It shows that the precipitation is high in the months of June, July, August indicating heavy rainfall in those 3 months.Also we can see sharp tranisitional periods May to June and then August to September indicating the transition from a wet season to a dry season or vice versa.
 
-![Average Precipitation](C:\Users\bruva\dataviz_final_project\figures\avg-precipitation.png)
+![Average Precipitation](https://github.com/brunda09/dataviz_final_project/blob/main/figures/avg-precipitation.png)
 
 ***
 
@@ -87,6 +87,6 @@ The bar plot shows average precipitation for each month. It shows that the preci
 
 Here I picked up the dataset: [RateMyProfessors comments](https://github.com/reisanar/datasets/blob/master/rmp_wit_comments.csv) and visualized the text data contained in "comments" column to create a frequency count `geom_bar()` of **most used bigrams** ignoring the stopwords.
 
-![Bigram](C:\Users\bruva\dataviz_final_project\figures\bigram.png)
+![Bigram](https://github.com/brunda09/dataviz_final_project/blob/main/figures/bigram.png)
 
 ***
