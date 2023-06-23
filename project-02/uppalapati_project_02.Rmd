@@ -1,0 +1,166 @@
+---
+title: "Mini-Project 02"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+    toc_float: true
+---
+
+# Data Visualization Project 02
+
+
+```{r}
+library(tidyverse)
+library(plotly)
+library(sf)
+library(dplyr)
+library(RColorBrewer)
+library(ggplot2)
+```
+
+```{r}
+getwd()
+```
+
+```{r}
+data <- read_csv("../data/20_Victims_of_rape.csv")
+data
+```
+# Interactive Plot
+
+
+```{r}
+inc_victims <- subset(data, Subgroup == "Victims of Incest Rape")
+
+g <- inc_victims %>%
+  group_by(Year) %>%
+  summarise(Cases_Reported = sum(Rape_Cases_Reported)) %>% 
+  rename(Year = Year, Cases_Reported = Cases_Reported)
+
+```
+
+Used `subset()` to filter only one kind of subgroup,group them by year and sum the reported cases.
+
+
+```{r}
+ fig <- plot_ly(g, x = ~Year, y = ~Cases_Reported, type = 'scatter',
+    hoverinfo = "text",
+    hovertemplate = 'No.of Cases Reported: %{y} <extra></extra>',
+    mode = 'lines+markers',
+    marker = list(color='purple'),
+               line = list(color = "blue")) %>%
+  layout(xaxis = list(title = "Year"), yaxis = list(title = "Cases Reported"),title = "<b> Total number of Cases throughout the years </b>")
+
+fig
+
+```
+
+Used `plotly` to increase the interactivity and `layout()` to improve the axis labels. 
+
+### Let's save a standalone HTML file
+
+
+```{r}
+library(htmlwidgets)
+
+htmlwidgets::saveWidget(
+                widget = fig, #the plotly object
+                file = "reported_cases_figure.html", #the path & file name
+                selfcontained = TRUE #creates a single html file
+                )
+```
+Saved the above plot using `htmlwidgets` and it in HTML format.
+
+# Spatial Visualization
+
+```{r}
+g1 <- inc_victims %>%
+  group_by(Area_Name) %>%
+  summarise(Cases_Reported = sum(Rape_Cases_Reported)) %>%
+  rename(`State/UT` = Area_Name)
+```
+
+```{r}
+shp_gdf <- st_read('../data/crime/Indian_states.shp')
+```
+
+Used `st_read()` to read the shape file.
+
+```{r}
+colnames(shp_gdf)
+```
+
+
+```{r}
+merged <- left_join(shp_gdf, g1, by = c('st_nm' = 'State/UT'))
+```
+
+We merged the shape file and filtered data(by Area_Name) using `left_join()`.
+
+```{r}
+ggplot() +
+  geom_sf(data = merged, aes(fill = Cases_Reported), color = 'black', lwd = 0.5) +
+  scale_fill_gradient(name = 'Cases Reported', low = 'white', high = 'red') +
+  coord_sf(crs = "+proj=merc") +
+  labs(title = 'State-wise Rape-Cases Reported (2001-2010)',x = NULL, y = NULL) +
+  scale_x_continuous(labels = function(x) paste0(x, '\u00B0', "E")) +
+  scale_y_continuous(labels = function(x) paste0(x, '\u00B0', "N")) +
+  theme_minimal() +
+  theme(legend.position = 'bottom')
+
+```
+
+# Linear Model
+
+```{r}
+head(g,10)
+```
+
+
+
+```{r}
+library(broom)
+
+```
+
+```{r}
+linear_reg <- lm(Cases_Reported~Year, data=g)
+
+summary(linear_reg)
+```
+
+```{r}
+tidy(linear_reg)
+```
+
+`tidy()` constructs a tibble that summarizes the model’s statistical findings. This includes coefficients and p-values for each term in a regression
+
+```{r}
+glance(linear_reg)
+
+```
+
+```{r}
+library(scales)
+```
+
+
+```{r}
+ggplot(g, aes(x = Year, y = Cases_Reported)) +
+ geom_point(color="#D55E00", size = 2) +
+ geom_smooth(method = "lm", 
+ formula = "y ~ x",
+ color = "#009E73",
+ size = 1.2,
+ fill="yellow") + 
+ scale_x_continuous(breaks = pretty_breaks()) +
+ annotate("text", x = 2005, y = 700, label = "outlier") +
+ theme_bw() +
+ labs (x="Year", y="Cases Reported",
+       title = "Linear Regression Model",
+       caption ="Dataset : rape_cases") 
+```
+
+Plot the linear regression model using `geom_point()` and `geom_smooth()` along with `annotate()` to display the outlier.
+

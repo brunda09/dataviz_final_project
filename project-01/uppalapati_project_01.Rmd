@@ -1,0 +1,242 @@
+---
+title: "Mini-Project 01"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+    toc_float: true
+---
+
+# Data Visualization Project 01
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The Dataset chosen for the Mini Project is "Data Science Job Posting on Glassdoor" taken from kaggle.com 
+
+[Data](https://www.kaggle.com/datasets/rashikrahmanpritom/data-science-job-posting-on-glassdoor?resource=download&select=Cleaned_DS_Jobs.csv)
+
+
+### Loading the relevent libraries
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(maps)
+```
+
+```{r}
+getwd()
+
+```
+
+```{r}
+
+job_data <- read_csv("../data/DS_Jobs.csv")
+job_data
+```
+
+
+Load the dataset using `read_csv()`
+
+```{r}
+job_data <- unique(job_data)
+job_data
+```
+
+### The Four Main Graphs which have been visualized are as follows: 
+
+
+#### 1)Top 5 job titles
+```{r}
+
+# Get frequency of each job title and select only top 10
+top_job_titles <- job_data %>%
+  group_by(`Job Title`) %>%
+  summarise(count = n()) %>%
+  top_n(5, count) %>%
+  arrange(desc(count))
+top_job_titles
+```
+Grouped the dataset by Job Title and extract the top 5 Titles(using `top_n()` function) along with their corresponding count(using `summarise()` function). 
+
+```{r top-5-job titles}
+ggplot(top_job_titles, aes(y = reorder(`Job Title`, -count) , x = count, fill = `Job Title`)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Top 5 Data Science Job Titles",
+       x = "Count",
+       y = "Job Title") +
+  theme_minimal() +
+  theme(legend.position="none")
+```
+
+
+What were the original charts you planned to create for this visualization?
+
+The original chart planned for this visualization was a bar chart showing the distribution of job titles in the field of data science. The goal was to identify the most common job titles.
+
+What story could you tell with your plot?
+
+The plot shows the top 5 most common job titles in data science based on the provided dataset. By analyzing this chart, we can observe the relative popularity of different job titles and gain insights into the job market for data science professionals. The plot allows us to compare the frequency of different job titles and identify the most prevalent roles.
+
+How did you apply the principles of data visualizations and design for this visualization?
+
+In this visualization, I applied several principles of data visualizations and design:
+Selecting an appropriate chart type: I chose a bar chart as it is effective for comparing the frequencies of different job titles.
+Sorting and limiting data: I sorted the job titles by count to ensure a clear representation of the most common titles. I also limited the chart to display only the top 10 job titles to avoid clutter.
+Adding labels and titles: I provided clear and informative labels for the axes and added a title that conveys the purpose of the visualization.
+Using color: I used different colors for each job title to enhance visual distinction.
+
+
+#### 2)Treemap for Data Science Job Sectors
+
+```{r}
+# Filter out rows with missing job locations
+filtered_data <- job_data %>%
+  filter(!(Sector)== -1 )
+
+# Count the frequency of each job sector
+sector_counts <- filtered_data %>%
+  group_by(Sector) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+sector_counts
+```
+
+First remove rows with missing sector values (using `filter()` function) and then get the count for each sector (using `group_by()` and `summarise()` function)
+
+
+```{r}
+library(treemapify)
+```
+
+
+```{r data-science-job-treemap}
+ggplot(sector_counts, aes(area = count, fill = Sector, label = paste(Sector, "\n", count))) +
+  geom_treemap() +
+  geom_treemap_text(place = "centre", reflow = TRUE, alpha = 0.8, color = "white") +
+  labs(title = "Data Science Job Sectors") +
+  theme_void() +
+  theme(legend.position = "none")
+```
+
+Used `geom_treemap()` and `geom_treemap_text()` available in `treemapify` package to create a treemap and display the content inside it.
+
+
+What were the original charts you planned to create for this visualization?
+
+ The original chart planned for this visualization was a pie chart representing the distribution of job sectors in data science.
+
+What story could you tell with your plot?
+
+ The plot visually presents the distribution of job sectors within the field of data science using a treemap chart. Each rectangle represents a job sector, and the size of the rectangle corresponds to the frequency of job postings in that sector. By examining the treemap, we can identify the relative prominence of different sectors and gain insights into the areas of specialization and industry focus within data science job opportunities.
+
+How did you apply the principles of data visualizations and design for this visualization?
+
+In this visualization, we applied several principles of data visualizations and design:
+Choosing an appropriate chart type: We used a treemap chart to represent the hierarchical structure of job sectors in data science, with each rectangle indicating the size of the sector based on the job count.
+Utilizing labels: We displayed the job sector names and counts directly on each rectangle of the treemap, allowing for easy identification and comparison.
+Simplifying the design: We used a minimal theme (theme_void()) to reduce visual distractions and keep the focus on the treemap chart itself.
+Removing the legend: In response to your request, we removed the legend to place the data labels directly on the treemap, enhancing readability and reducing clutter.
+
+
+
+#### 3)distribution of average salaries across different job types
+
+```{r}
+#install.packages("RColorBrewer")
+library(RColorBrewer)
+```
+
+
+```{r avg-salary-by-job-type}
+# Filter out rows with missing job type or average salary information
+filtered_data <- job_data %>%
+  filter(!is.na(job_simp) & !is.na(avg_salary))
+
+# Sort the job types based on median salary
+sorted_data <- filtered_data %>%
+  group_by(job_simp) %>%
+  summarise(median_salary = median(avg_salary)) %>%
+  arrange(desc(median_salary))
+
+# color palette for the job types
+job_type_palette <- brewer.pal(length(sorted_data$job_simp), "Set3")
+
+#  box plot
+ggplot(filtered_data, aes(y = reorder(job_simp, avg_salary, FUN = median), x = avg_salary, fill = job_simp)) +
+  geom_boxplot() +
+  scale_fill_manual(values = job_type_palette) +
+  labs(title = "Average Salary by Job Type",
+       y = "Job Type",
+       x = "Average Salary",
+       fill = "Job Type") +
+  theme_bw() 
+ # theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+First remove rows with missing job type and average salary using filter, then sort the job types using `summarise()` then color the palette for different job types using `brewer.pal()` function. Then plot the boxplot using `geom_plot()`.
+
+
+What were the original charts you planned to create for this visualization?
+
+The original chart planned for this visualization was a box plot showing the distribution of average salaries across different job types. The improvement made was to add color to the box plot to differentiate the job types visually and sort them based on the median salary for better comparison.
+
+What story could you tell with your plot?
+
+The plot allows us to compare the salary distributions for different job types within the data science field. By examining the box plot, we can identify the median, quartiles, and any outliers for each job type. The addition of color enhances the visualization, making it easier to differentiate the job types visually. The sorting of job types based on median salary helps us identify the job types with higher or lower salary ranges. This information provides insights into the salary differences based on job roles within the data science field.
+
+How did you apply the principles of data visualizations and design for this visualization?
+
+In this visualization, we applied several principles of data visualizations and design:
+Choosing an appropriate chart type: We used a box plot to visualize the distribution of average salaries for different job types, providing an effective way to compare the central tendency and spread of the data.
+Color encoding: We added different colors to each job type using a color palette, making it easier to differentiate and compare the job types visually.
+Sorting the data: We sorted the job types based on the median salary to present a clearer comparison between the job types.
+Providing labels and titles: We added a title to the chart and labeled the axes to provide clear context and understanding of the plotted variables.
+Emphasizing simplicity and readability: We used a minimal theme (theme_bw()) and adjusted the x-axis text angle to improve readability and maintain visual clarity.
+
+
+
+#### 4)Average salary versus Company Age
+
+```{r avg-salary-by-company-age}
+# Filter out rows with missing average salary or company age information
+filtered_data <- job_data %>%
+  filter(!is.na(avg_salary) & !is.na(company_age))
+
+# Create the scatter plot
+ggplot(filtered_data, aes(x = company_age, y = avg_salary)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "#ff7f0e") +
+  labs(title = "Average Salary vs. Company Age",
+       x = "Company Age",
+       y = "Average Salary") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 18, face = "bold"),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.position = "none")
+
+```
+
+Remove rows with missing average salary and company age using `filter()` and create a scatterplot using `geom_point()` and `geom_smooth()`.
+
+
+What were the original charts you planned to create for this visualization?
+
+The original chart planned for this visualization was a scatter plot showing the relationship between average salary and company age. The improvement made was to add transparency to the scatter plot points, include a linear regression line to show the overall trend, adjust the font sizes for better readability, and remove the legend since we have only one group represented by the scatter plot points.
+
+What story could you tell with your plot?
+
+The plot allows us to explore the relationship between average salary and company age within the dataset. By examining the scatter plot and the added regression line, we can identify any trends or patterns that might exist. If the regression line has a positive slope, it suggests that there is a general trend of higher average salaries for older companies. Conversely, if the regression line has a negative slope or no significant trend, it indicates a less clear relationship between average salary and company age. This information provides insights into how the average salary varies based on the age of the company.
+
+How did you apply the principles of data visualizations and design for this visualization?
+
+In this visualization, we applied several principles of data visualizations and design:
+Choosing an appropriate chart type: We used a scatter plot to visualize the relationship between two continuous variables, average salary and company age.
+Adding additional elements: We added transparency to the scatter plot points to handle overlapping data and included a linear regression line to show the overall trend.
+Adjusting aesthetics: We adjusted the font sizes for the title and axis labels to enhance readability.
+Removing unnecessary elements: We removed the legend since we have only one group represented by the scatter plot points, simplifying the plot and reducing clutter.
+
+
