@@ -66,7 +66,7 @@ In the initial step the shapefile of the data being used is loaded. The shapefil
 Then merge operation is performed using `join()` to relate shapefile with our dataset of rape victims.geom_sf() is used to display spatial information and mercator projection is used .
 
 
-![Graph for Areawise Rape Cases](C:\Users\bruva\dataviz_final_project\figures\statewise-rape-cases.png)
+![Graph for Areawise Rape Cases](https://github.com/brunda09/dataviz_final_project/blob/main/figures/statewise-rape-cases.png)
 
 ***
 
@@ -76,6 +76,6 @@ Then merge operation is performed using `join()` to relate shapefile with our da
 The dataset is grouped according to year and the number of rape cases reported are summed up and stored in a new sub dataset which is used to plot the linear regression graph. The `broom` library is used to tidy up the dataset and the linear regression is viewed with the help of `summary()` and `glance()` functions. 
 
 
-![Model for Rape Cases](C:\Users\bruva\dataviz_final_project\figures\linear-regression.png)
+![Model for Rape Cases](https://github.com/brunda09/dataviz_final_project/blob/main/figures/linear-regression.png)
 
 ***
