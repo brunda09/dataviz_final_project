@@ -52,7 +52,7 @@ A scatter plot is plotted which is displayed with the help of "markers+lines" wh
 
 The interactive plot is then saved as a standalone **HTML File** which can be accessed via:
 
-[Rape Cases Data](file:///C:/Users/bruva/dataviz_final_project/project-02/reported_cases_figure.html)
+[Rape Cases Data](https://raw.githubusercontent.com/brunda09/dataviz_final_project/main/project-02/reported_cases_figure.html)
 
 ***
 
