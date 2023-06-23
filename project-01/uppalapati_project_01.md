@@ -33,7 +33,7 @@ The Four Main Graphs which have been visualized are as follows:
 
 **Finding the Top 5 job titles**
 
-![Graph for Top 5 job titles](C:\Users\bruva\dataviz_final_project\figures\top-5-job titles.png)
+![Graph for Top 5 job titles](https://github.com/brunda09/dataviz_final_project/blob/main/figures/top-5-job%20titles.png)
 
 The plot shows the top 5 most common job titles in data science based on the provided dataset. By analyzing this chart, we can observe the relative popularity of different job titles and gain insights into the job market for data science professionals. The plot allows us to compare the frequency of different job titles and identify the most prevalent roles which is data scientist in this context.
 
@@ -45,7 +45,7 @@ The original chart planned for this visualization was a bar chart showing the di
 
 **Treemap for Data Science Job Sectors**
 
-![Treemap for Data Science Job Sectors](C:\Users\bruva\dataviz_final_project\figures\DS-Job-Sectors.png)
+![Treemap for Data Science Job Sectors](https://github.com/brunda09/dataviz_final_project/blob/main/figures/DS-Job-Sectors.png)
 
 The plot visually presents the distribution of job sectors within the field of data science using a treemap chart. Each rectangle represents a job sector, and the size of the rectangle corresponds to the frequency of job postings in that sector. By examining the treemap, we can identify the relative prominence of different sectors and gain insights into the areas of specialization and industry focus within data science job opportunities.
 `treemapify` package has been used here.
@@ -58,7 +58,7 @@ The plot visually presents the distribution of job sectors within the field of d
 
 **Distribution of average salaries across different job types**
 
-![Avg salary by job type](C:\Users\bruva\dataviz_final_project\figures\avg-salary-by-job-type-1.png)
+![Avg salary by job type](https://github.com/brunda09/dataviz_final_project/blob/main/figures/avg-salary-by-job-type-1.png)
 
 The plot allows us to compare the salary distributions for different job types within the data science field. By examining the box plot, we can identify the median, quartiles, and any outliers for each job type. The addition of color enhances the visualization, making it easier to differentiate the job types visually. The sorting of job types based on median salary helps us identify the job types with higher or lower salary ranges. This information provides insights into the salary differences based on job roles within the data science field.
 `RColorBrewer` package has been used here.
@@ -71,7 +71,7 @@ The plot allows us to compare the salary distributions for different job types w
 
 **Relation between Average salary versus Company Age**
 
-![Avg salary by company age](C:\Users\bruva\dataviz_final_project\figures\avg-salary-by-company-age-1.png)
+![Avg salary by company age](https://github.com/brunda09/dataviz_final_project/blob/main/figures/avg-salary-by-company-age-1.png)
 
 The plot allows us to explore the relationship between average salary and company age within the dataset. By examining the scatter plot and the added regression line, we can identify any trends or patterns that might exist. If the regression line has a positive slope, it suggests that there is a general trend of higher average salaries for older companies. Conversely, if the regression line has a negative slope or no significant trend, it indicates a less clear relationship between average salary and company age. This information provides insights into how the average salary varies based on the age of the company.
 `geom_smooth` method has been used here.
